@@ -38,7 +38,6 @@ from braket.device_schema.pulse.pulse_device_action_properties_v1 import (  # no
 from braket.devices.device import Device
 from braket.ir.blackbird import Program as BlackbirdProgram
 from braket.ir.openqasm import Program as OpenQasmProgram
-from braket.native_gates.native_gate_calibration import NativeGateCalibration
 from braket.parametric.free_parameter import FreeParameter
 from braket.pulse import (
     ArbitraryWaveform,
@@ -50,6 +49,7 @@ from braket.pulse import (
     PulseSequence,
 )
 from braket.schema_common import BraketSchemaBase
+from braket.native_gates.native_gate_calibration import NativeGateCalibration
 
 
 class AwsDeviceType(str, Enum):
