@@ -395,7 +395,7 @@ class AwsDevice(Device):
         Returns the href for the native gate calibration data is the device has it.
         """
         if hasattr(self.properties, "nativeGateCalibrationsRef"):
-            return self.native_gate_calibration_timestamp
+            return self.properties.nativeGateCalibrationsRef
         else:
             return None
 
