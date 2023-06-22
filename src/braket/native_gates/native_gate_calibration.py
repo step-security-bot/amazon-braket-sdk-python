@@ -61,13 +61,14 @@ class NativeGateCalibration:
             return self.calibration_data.to_ir().replace('cal', self._def_cal_gate(key), 1)
         else:
             defcal = "\n".join(
-                v.to_ir().replace('cal', self._def_cal_gate(k), 1) for (k, v) in self.calibration_data.items()
+                v.to_ir().replace('cal', self._def_cal_gate(k), 1) for (k, v) in self.calibration_data.items() if
+                isinstance(v, PulseSequence)
             )
             return defcal
 
     def _def_cal_gate(self, gate_key: Tuple[Gate, QubitSet]) -> str:
         gate_to_qasm = gate_key[0]._qasm_name
         if isinstance(gate_key[0], AngledGate):
-            gate_to_qasm += "(" + "angle " + gate_key[0].angle + ")"
-        qubit_to_qasm = " ".join(["$" + str(int(q)) for q in gate_key[1]])
+            gate_to_qasm += f"(angle {gate_key[0].angle})"
+            qubit_to_qasm = " ".join([f"${int(q)}" for q in gate_key[1]])
         return " ".join(["defcal", gate_to_qasm, qubit_to_qasm])
