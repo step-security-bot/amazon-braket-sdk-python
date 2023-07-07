@@ -773,7 +773,14 @@ class AwsDevice(Device):
             elif instr["arguments"][i]["name"] == "qubit":
                 if qubits_or_frames == list():
                     qubits_or_frames = QubitSet([])
-                qubits_or_frames.add(Qubit(int(instr["arguments"][i]["value"])))
+                qubit = (
+                    Qubit(int(instr["arguments"][i]["value"]))
+                    if is_float(instr["arguments"][i]["value"])
+                    else None
+                )
+                if qubit is None:
+                    continue
+                qubits_or_frames.add(qubit)
             elif instr["arguments"][i]["name"] == "duration":
                 duration = (
                     float(instr["arguments"][i]["value"])
